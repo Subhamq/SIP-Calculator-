@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cal C</title>
+
+<style>
+:root{
+  --primary:#1faa59;
+  --primary-dark:#148f44;
+  --bg:#f4fff8;
+}
+
+*{
+  box-sizing:border-box;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  padding-bottom:70px;
+}
+
+/* Header */
+.app-header{
+  text-align:center;
+  padding:10px 0;
+}
+.app-header h1{
+  margin:0;
+  font-size:20px;
+  color:var(--primary);
+  font-weight:600;
+}
+
+/* Content */
+.container{
+  padding:12px;
+  animation:fadeIn 0.5s ease;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid #cceedd;
+  font-size:16px;
+}
+input:focus{
+  outline:none;
+  border-color:var(--primary);
+  box-shadow:0 0 6px rgba(31,170,89,0.4);
+}
+
+/* Buttons */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:20px;
+  background:var(--primary);
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.2s;
+}
+button:active{
+  transform:scale(0.92);
+}
+
+/* Bottom Nav */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#0f3d2e;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  box-shadow:0 -4px 10px rgba(0,0,0,0.25);
+}
+
+.tab{
+  background:none;
+  border:none;
+}
+.tab img{
+  width:26px;
+  height:26px;
+  transition:0.25s;
+}
+.tab.active img{
+  transform:translateY(-6px) scale(1.1);
+}
+
+/* Hide sections */
+.section{display:none;}
+.section.active{display:block;}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<header class="app-header">
+  <h1>Cal<span style="font-weight:800;">C</span></h1>
+</header>
+
+<div class="container">
+
+  <!-- Calculator -->
+  <div class="section active" id="calc">
+    <input type="number" placeholder="Enter number 1">
+    <input type="number" placeholder="Enter number 2">
+    <button>Calculate</button>
+  </div>
+
+  <!-- SIP -->
+  <div class="section" id="sip">
+    <input type="number" placeholder="Monthly Investment ₹">
+    <input type="number" placeholder="Expected Return %">
+    <input type="number" placeholder="Years">
+    <button>Calculate SIP</button>
+  </div>
+
+  <!-- Stocks -->
+  <div class="section" id="stocks">
+    <input type="number" placeholder="Buy Price">
+    <input type="number" placeholder="Sell Price">
+    <input type="number" placeholder="Quantity">
+    <button>Calculate Profit</button>
+  </div>
+
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <button class="tab active" onclick="switchTab('calc',this)">
+    <img src="icons/calculator.png">
+  </button>
+  <button class="tab" onclick="switchTab('sip',this)">
+    <img src="icons/sip.png">
+  </button>
+  <button class="tab" onclick="switchTab('stocks',this)">
+    <img src="icons/stocks.png">
+  </button>
+</div>
+
+<!-- Sound -->
+<audio id="keySound" src="sounds/pop.mp3"></audio>
+
+<script>
+function switchTab(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+/* Typing sound */
+const sound=document.getElementById("keySound");
+document.querySelectorAll("input").forEach(inp=>{
+  inp.addEventListener("keydown",()=>{
+    sound.currentTime=0;
+    sound.play();
+  });
+});
+</script>
+
+</body>
+</html>
